@@ -25,9 +25,11 @@ app.use(
 
 // import routes - try to import routes only after express finished setting up
 const landingRoutes = require('./routes/landing')
+const postersRoutes = require('./routes/posters');
 
 async function main() {
     app.use('/',landingRoutes)
+    app.use('/posters',postersRoutes)
 }
 
 main();
