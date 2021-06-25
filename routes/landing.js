@@ -3,15 +3,15 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/',(req,res)=>{
-    res.send('Home')
+    res.render('landing/index')
 })
 
 router.get('/about', (req,res)=>{
-    res.send('About Us')
+    res.render('landing/about')
 })
 
 router.get('/contact', (req,res)=>{
-    res.send('Contact Us')
+    res.render('landing/contact')
 })
 
 module.exports = router;
