@@ -32,6 +32,51 @@ const createPosterForm = () => {
             cssClasses:{
                 label:['form-label']
             }
+        }),
+        'cost': fields.number({
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'description': fields.string({
+            required:true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'date': fields.date({
+            required:true,
+            errorAfterField: true,
+            widget: forms.widgets.date(),
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'stock': fields.number({
+            required:true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'height': fields.number({
+            required:true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'width': fields.number({
+            required:true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
         })
     })
 }
+
+modules.export = { createPosterForm, bootstrapField };
