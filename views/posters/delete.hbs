@@ -2,8 +2,13 @@
 
 {{#block 'content'}}
 
-<div class="alert">Proceed with deleting {{poster.title}} ?</div>
-<a href="/posters">No</a>
+<form method="POST">
+    <div class="alert alert-danger">Proceed with deleting {{poster.title}} ?</div>
+    <a href="/posters">No</a>
+    <button>Ok</button>
+</form>
+
+
 
 
 {{/block}}
