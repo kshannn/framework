@@ -2,7 +2,7 @@ const bookshelf = require('../bookshelf')
 
 const Posters = bookshelf.model('Posters', {
     tableName: 'posters',
-    category () {
+    category() {
         return this.belongsTo('Categories')
     }
 });

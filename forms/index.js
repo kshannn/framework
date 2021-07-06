@@ -79,7 +79,7 @@ const createPosterForm = (categories) => {
             }
         }),
         'category_id': fields.string({
-            label: 'Category',
+            label: 'Categories',
             required: true,
             errorAfterField: true,
             cssClasses: {
