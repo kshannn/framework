@@ -35,7 +35,77 @@ router.post('/create', async(req,res) => {
             poster.set('width', form.data.width);
             await poster.save();
             res.redirect('/posters')
+        },
+        'error': async (form) => {
+            res.render('posters/create', {
+                'form': form.toHTML(bootstrapField)
+            })
         }
+    })
+})
+
+router.get('/:poster_id/update', async (req,res) => {
+    const posterId = req.params.poster_id
+
+    const poster = await Posters.where({
+        id: posterId
+    }).fetch({
+        require: true
+    })
+
+    const posterForm = createPosterForm();
+
+    posterForm.fields.title.value = poster.get('title');
+    posterForm.fields.cost.value = poster.get('cost');
+    posterForm.fields.description.value = poster.get('description');
+    posterForm.fields.date.value = poster.get('date');
+    posterForm.fields.stock.value = poster.get('stock');
+    posterForm.fields.height.value = poster.get('height');
+    posterForm.fields.width.value = poster.get('width')
+
+    res.render('posters/update',{
+        'form': posterForm.toHTML(bootstrapField),
+        'poster': poster.toJSON()
+    })
+})
+
+
+router.post('/:poster_id/update', async (req,res) => {
+    const posterId = req.params.poster_id
+
+    const poster = await Posters.where({
+        id: posterId
+    }).fetch({
+        require: true
+    })
+
+    const posterForm = createPosterForm();
+    posterForm.handle(req, {
+        'success': async (form) => {
+            poster.set(form.data);
+            poster.save();
+            res.redirect('/posters')
+        },
+        'error': async (form) => {
+            res.render('posters/update', {
+                'form': form.toHTML(bootstrapField)
+            })
+        }
+    })
+
+})
+
+router.get('/:poster_id/delete', async (req,res)=>{
+    posterId = req.params.poster_id
+
+    const poster = await Posters.where({
+        id: posterId
+    }).fetch({
+        require: true
+    })
+
+    res.render('posters/delete', {
+        'poster': poster.toJSON()
     })
 })
 
