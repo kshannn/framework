@@ -79,4 +79,4 @@ const createPosterForm = () => {
     })
 }
 
-modules.export = { createPosterForm, bootstrapField };
+module.exports = { createPosterForm, bootstrapField };
