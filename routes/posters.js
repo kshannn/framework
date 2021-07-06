@@ -22,7 +22,12 @@ router.get('/create', async(req,res)=> {
 })
 
 router.post('/create', async(req,res) => {
-    const posterForm = createPosterForm();
+    const allCategories = await Categories.fetchAll().map((category)=>{
+        return [category.get('id'),category.get('name')]
+    })
+
+
+    const posterForm = createPosterForm(allCategories);
     posterForm.handle(req, {
         'success': async (form) => {
             const poster = new Posters();
