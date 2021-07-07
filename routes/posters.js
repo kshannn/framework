@@ -60,13 +60,17 @@ router.post('/create', async(req,res) => {
 router.get('/:poster_id/update', async (req,res) => {
     const posterId = req.params.poster_id
 
+    const choices = await Categories.fetchAll().map((category)=>{
+        return [category.get('id'),category.get('name')]
+    })
+
     const poster = await Posters.where({
         id: posterId
     }).fetch({
         require: true
     })
 
-    const posterForm = createPosterForm();
+    const posterForm = createPosterForm(choices);
 
     posterForm.fields.title.value = poster.get('title');
     posterForm.fields.cost.value = poster.get('cost');
