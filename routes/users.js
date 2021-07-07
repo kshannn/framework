@@ -21,7 +21,6 @@ router.post('/register', (req,res)=>{
     const registerForm = createRegistrationForm();
     registerForm.handle(req, {
         success: async (form) => {
-            console.log(form)
             const user = new User ({
                 'username': form.data.username,
                 'password': form.data.password,

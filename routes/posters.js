@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
  // #1 import in the Posters and Categories model
-const { Posters, Categories } = require('../models')
+const { Posters, Categories, Tag } = require('../models')
 // #2 import in forms
 const { bootstrapField, createPosterForm } = require('../forms')
 
@@ -22,7 +22,9 @@ router.get('/create', async(req,res)=> {
         return [category.get('id'),category.get('name')]
     })
 
-    const posterForm = createPosterForm(choices);
+    const allTags = await Tag.fetchAll().map(tag => [tag.get('id'),tag.get('name')])
+
+    const posterForm = createPosterForm(choices, allTags);
     res.render('posters/create',{
         'form': posterForm.toHTML(bootstrapField)
     })
