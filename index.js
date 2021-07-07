@@ -30,6 +30,7 @@ app.use(
 // import routes - try to import routes only after express finished setting up
 const landingRoutes = require('./routes/landing')
 const postersRoutes = require('./routes/posters');
+const usersRoutes = require('./routes/users');
 
 
 // set up sessions
@@ -55,6 +56,7 @@ app.use(function(req,res,next){
 async function main() {
     app.use('/',landingRoutes)
     app.use('/posters',postersRoutes)
+    app.use('/users',usersRoutes)
 }
 
 main();
