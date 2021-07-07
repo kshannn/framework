@@ -35,12 +35,18 @@ router.post('/create', async(req,res) => {
         return [category.get('id'),category.get('name')]
     })
 
+    const allTags = await Tag.fetchAll().map(tag => [tag.get('id'),tag.get('name')])
 
-    const posterForm = createPosterForm(choices);
+
+    const posterForm = createPosterForm(choices, allTags);
     posterForm.handle(req, {
         'success': async (form) => {
+            console.log(form.data)
+            let {tags, ...posterData} = form.data;
+
+    
             // const poster = new Posters(form.data);
-            const poster = new Posters(form.data);
+            const poster = new Posters(posterData);
             
             // poster.set('title', form.data.title);
             // poster.set('cost',form.data.cost);
@@ -50,6 +56,11 @@ router.post('/create', async(req,res) => {
             // poster.set('height', form.data.height);
             // poster.set('width', form.data.width);
             await poster.save();
+
+            if (tags){
+                let x = await poster.tags().attach(tags.split(','))
+                console.log(x)
+            }
 
             req.flash('success_messages', `New poster ${poster.get('title')} has beed created`)
             res.redirect('/posters')
