@@ -16,6 +16,7 @@ router.get('/', async (req,res)=>{
     })
 })
 
+// ========= CREATE poster =========
 router.get('/create', async(req,res)=> {
     const choices = await Categories.fetchAll().map((category)=>{
         return [category.get('id'),category.get('name')]
@@ -47,15 +48,20 @@ router.post('/create', async(req,res) => {
             // poster.set('height', form.data.height);
             // poster.set('width', form.data.width);
             await poster.save();
+
+            req.flash('success_messages', `New poster ${poster.get('title')} has beed created`)
             res.redirect('/posters')
         },
         'error': async (form) => {
             res.render('posters/create', {
                 'form': form.toHTML(bootstrapField)
             })
+            req.flash('error_messages','Error creating the poster')
         }
     })
 })
+
+// ========= UPDATE poster =========
 
 router.get('/:poster_id/update', async (req,res) => {
     const posterId = req.params.poster_id
