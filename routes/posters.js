@@ -11,7 +11,7 @@ router.get('/', async (req,res)=>{
     let posters = await Posters.collection().fetch({
         withRelated: ['category']
     });
-    console.log(posters)
+    // console.log(posters)
     res.render('posters/index',{
         'posters': posters.toJSON()
     })
@@ -125,14 +125,32 @@ router.post('/:poster_id/update', async (req,res) => {
     const poster = await Posters.where({
         id: posterId
     }).fetch({
-        require: true
+        require: true,
+        withRelated: ['tags']
     })
 
     const posterForm = createPosterForm();
     posterForm.handle(req, {
         'success': async (form) => {
-            poster.set(form.data);
+            let {tags, ... productData} = form.data
+            poster.set(productData);
             poster.save();
+
+            // update the tags
+            let tagIds = tags.split(',')
+            console.log("user input: ", tagIds)
+
+            let existingTagIds = await poster.related('tags').pluck('id')
+            console.log("tags in existing: ", existingTagIds);
+
+            // remove all tags that aren't selected
+            let toRemove = existingTagIds.filter( id => tagIds.includes(id.toString()) === false)
+            await poster.tags().detach(toRemove);
+            
+            console.log("tags to remove", toRemove)
+            // add in all tags selected in the form
+            await poster.tags().attach(tagIds)
+
             res.redirect('/posters')
         },
         'error': async (form) => {
