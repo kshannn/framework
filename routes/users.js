@@ -17,7 +17,7 @@ router.get('/register', (req,res)=>{
 })
 
 // process registration form
-router.post('/register', (req,res)=>{
+router.post('/register', async (req,res)=>{
     const registerForm = createRegistrationForm();
     registerForm.handle(req, {
         success: async (form) => {
@@ -28,7 +28,7 @@ router.post('/register', (req,res)=>{
             });
             await user.save();
             req.flash('success_messages', 'User signed up successfully');
-            res.redirect('users/login')
+            res.redirect('/users/login')
         },
         error: (form) => {
             res.render('users/register', {
@@ -38,6 +38,13 @@ router.post('/register', (req,res)=>{
         }
     })
 })
+
+
+// user log in 
+router.get('/login', (req,res) => {
+    res.render('users/login')
+})
+
 
 
 module.exports = router;

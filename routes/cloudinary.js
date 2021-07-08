@@ -3,7 +3,8 @@ const router = express.Router();
 
 // include in cloudinary that we yarn added previously
 const cloudinary = require('cloudinary')
-router.get('/sign', async (req,res)=>{
+
+router.get('/sign', (req,res)=>{
     // retrieve the parameters we need to send to cloudinary
     const params_to_sign = JSON.parse(req.query.params_to_sign);
     // retrieve our cloudinary api secret from the environment

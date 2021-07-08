@@ -58,7 +58,7 @@ app.use(function(req,res,next){
 async function main() {
     app.use('/',landingRoutes)
     app.use('/posters',postersRoutes)
-    app.use('/users',usersRoutes)
+    app.use('/users', usersRoutes)
     // app.use('/cloudinary', cloudinaryRoutes);
 }
 
