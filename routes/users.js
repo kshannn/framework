@@ -10,7 +10,6 @@ const getHashedPassword = (password) => {
     return hash;
 }
 
-
 // import user bookshelf model
 const { User } = require('../models');
 

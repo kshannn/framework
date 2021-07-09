@@ -6,6 +6,9 @@ const { Posters, Categories, Tag } = require('../models')
 // #2 import in forms
 const { bootstrapField, createPosterForm } = require('../forms')
 
+// #3 import checkIfAuthenticated middleware
+const { checkIfAuthenticated } = require('../middlewares')
+
 router.get('/', async (req,res)=>{
      // #2 - fetch all the products (ie, SELECT * from posters)
     let posters = await Posters.collection().fetch({
@@ -18,7 +21,7 @@ router.get('/', async (req,res)=>{
 })
 
 // ========= CREATE poster =========
-router.get('/create', async(req,res)=> {
+router.get('/create', checkIfAuthenticated, async(req,res)=> {
     const choices = await Categories.fetchAll().map((category)=>{
         return [category.get('id'),category.get('name')]
     })
@@ -35,7 +38,7 @@ router.get('/create', async(req,res)=> {
     })
 })
 
-router.post('/create', async(req,res) => {
+router.post('/create', checkIfAuthenticated, async(req,res) => {
     const choices = await Categories.fetchAll().map((category)=>{
         return [category.get('id'),category.get('name')]
     })
@@ -79,7 +82,7 @@ router.post('/create', async(req,res) => {
 
 // ========= UPDATE poster =========
 
-router.get('/:poster_id/update', async (req,res) => {
+router.get('/:poster_id/update', checkIfAuthenticated, async (req,res) => {
     const posterId = req.params.poster_id
 
     const poster = await Posters.where({
@@ -119,7 +122,7 @@ router.get('/:poster_id/update', async (req,res) => {
 })
 
 
-router.post('/:poster_id/update', async (req,res) => {
+router.post('/:poster_id/update', checkIfAuthenticated, async (req,res) => {
     const posterId = req.params.poster_id
 
     const poster = await Posters.where({
@@ -162,7 +165,7 @@ router.post('/:poster_id/update', async (req,res) => {
 
 })
 
-router.get('/:poster_id/delete', async (req,res)=>{
+router.get('/:poster_id/delete', checkIfAuthenticated, async (req,res)=>{
     posterId = req.params.poster_id
 
     const poster = await Posters.where({
@@ -176,7 +179,7 @@ router.get('/:poster_id/delete', async (req,res)=>{
     })
 })
 
-router.post('/:poster_id/delete', async (req,res) => {
+router.post('/:poster_id/delete', checkIfAuthenticated, async (req,res) => {
     posterId = req.params.poster_id
 
     const poster = await Posters.where({
