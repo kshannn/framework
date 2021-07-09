@@ -1,6 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+
+// password encryption, creating fn that generates hashed password
+const crypto = require('crypto');
+const getHashedPassword = (password) => {
+    const sha256 = crypto.createHash('sha256');
+    const hash = sha256.update(password).digest('base64');
+    return hash;
+}
+
+
 // import user bookshelf model
 const { User } = require('../models');
 
@@ -23,7 +33,7 @@ router.post('/register', async (req,res)=>{
         success: async (form) => {
             const user = new User ({
                 'username': form.data.username,
-                'password': form.data.password,
+                'password': getHashedPassword(form.data.password),
                 'email': form.data.email
             });
             await user.save();
@@ -65,7 +75,7 @@ router.post('/login', (req,res) => {
                 res.redirect('/users/login')
             } else {
                 // check if pw match
-                if(user.get('password') === form.data.password){
+                if(user.get('password') === getHashedPassword(form.data.password)){
                     // add to session the user details if login succeed
                     req.session.user = {
                         id: user.get('id'),
