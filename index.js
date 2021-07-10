@@ -52,6 +52,12 @@ app.use(function(req,res,next){
   next();
 })
 
+// global middleware (make user information accessible in all hbs files)
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user;
+  next();
+})
+
 
 
 
