@@ -5,6 +5,7 @@
 <p>Please login with your acccount below!</p>
 
 <form method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     {{{forms}}}
     <button class="btn btn-info my-3">Login</button>
 </form>

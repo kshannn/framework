@@ -31,12 +31,14 @@ app.use(
 const landingRoutes = require('./routes/landing')
 const postersRoutes = require('./routes/posters');
 const usersRoutes = require('./routes/users');
-// const cloudinaryRoutes = require('./routes/cloudinary/js');
+
+// import Cloudinary
+const cloudinaryRoutes = require('./routes/cloudinary');
 
 
 // set up sessions
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.SESSION_SECRET_KEY,
   resave: false,
   saveUninitialized: true
 }))
@@ -58,14 +60,19 @@ app.use(function(req, res, next) {
   next();
 })
 
-
-
+// require and enable csrf for all routes
+const csrf = require('csurf')
+app.use(csrf())
+app.use(function(req, res, next){
+  res.locals.csrfToken = req.csrfToken();
+  next();
+})
 
 async function main() {
     app.use('/',landingRoutes)
     app.use('/posters',postersRoutes)
     app.use('/users', usersRoutes)
-    // app.use('/cloudinary', cloudinaryRoutes);
+    app.use('/cloudinary', cloudinaryRoutes);
 }
 
 main();

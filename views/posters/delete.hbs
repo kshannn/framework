@@ -3,6 +3,7 @@
 {{#block 'content'}}
 
 <form method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     <div class="alert alert-danger">Proceed with deleting {{poster.title}} ?</div>
     <a href="/posters">No</a>
     <button>Ok</button>

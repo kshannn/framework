@@ -3,6 +3,12 @@
 {{#block 'content'}}
 
 <h1>Posters</h1>
+
+<form method="GET">
+    {{{form}}}
+    <button class="btn btn-primary mb-3 mt-3">Search</button>
+</form>
+
 <div class="container">
     <table class="table">
         <thead>
@@ -12,6 +18,8 @@
                 <th>Cost</th>
                 <th>Description</th>
                 <th>Category</th>
+                <th>Tags</th>
+                <th>Image</th>
                 <th>Date</th>
                 <th>Stock</th>
                 <th>Height</th>
@@ -37,6 +45,18 @@
                 {{this.category.name}}
             </td>
             <td>
+                {{#each this.tags}}
+                    <span class="badge bg-primary">
+                        {{this.name}}
+                    </span>
+                {{/each}}
+            </td>
+            <td>
+                {{#if this.image_url}}
+                <img src="{{this.image_url}}" class="img-fluid"/>
+                {{/if}}
+            </td>
+            <td>
                 {{this.date}}
             </td>
             <td>
@@ -53,6 +73,8 @@
                 <a href ="/posters/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
+
+
 
         {{/each}}
 

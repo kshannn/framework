@@ -103,7 +103,6 @@ const createPosterForm = (categories, tags) => {
     })
 }
 
-
 const createRegistrationForm = () => {
     return forms.create({
         'username': fields.string({
@@ -157,4 +156,51 @@ const createLoginForm = () => {
     })
 }
 
-module.exports = { createPosterForm, createRegistrationForm, createLoginForm, bootstrapField };
+const createSearchForm = (categories, tags) => {
+    return forms.create({
+        'name': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'min-cost': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            validators:[validators.integer(), validators.min(0)]
+        }),
+        'max-cost': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            validators:[validators.integer(), validators.min(0)]
+        }),
+        'category_id': fields.string({
+            label: 'Category',
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: categories
+        }),
+        'tags': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.multipleSelect(),
+            choices: tags
+        })
+    })
+}
+
+module.exports = { createPosterForm, createRegistrationForm, createLoginForm, createSearchForm, bootstrapField };

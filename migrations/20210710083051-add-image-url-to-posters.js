@@ -22,7 +22,7 @@ exports.up = function(db) {
 };
 
 exports.down = function(db) {
-  return db.dropColumn('posters', 'image_url');
+  return db.removeColumn('posters', 'image_url');
 };
 
 exports._meta = {
