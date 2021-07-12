@@ -28,4 +28,11 @@ const Tag = bookshelf.model('Tag', {
     }
 })
 
-module.exports = { Posters, Categories, User, Tag };
+const CartItem = bookshelf.model('CartItem', {
+    tableName: 'cart_items',
+    posters () {
+        return this.belongsTo('Posters')
+    }
+})
+
+module.exports = { Posters, Categories, User, Tag, CartItem };

@@ -165,7 +165,7 @@ const createSearchForm = (categories, tags) => {
                 label: ['form-label']
             }
         }),
-        'min-cost': fields.string({
+        'min_cost': fields.string({
             required: false,
             errorAfterField: true,
             cssClasses: {
@@ -173,7 +173,7 @@ const createSearchForm = (categories, tags) => {
             },
             validators:[validators.integer(), validators.min(0)]
         }),
-        'max-cost': fields.string({
+        'max_cost': fields.string({
             required: false,
             errorAfterField: true,
             cssClasses: {

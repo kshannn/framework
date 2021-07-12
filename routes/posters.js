@@ -56,16 +56,14 @@ router.get('/', async (req,res)=>{
             })
         },
         'success': async (form) => {
-            console.log('form data', form.data['min-cost'])
 
            if (form.data.name) {
                q = q.where('name', 'like', '%' + form.data.name + '%')
            }
 
-           console.log('min cost: ', form.data['min_cost'])
            
-           if (form.data['min_cost']) {
-                q= q.where('cost', '>=', form.data['min_cost'])
+           if (form.data.min_cost) {
+                q= q.where('cost', '>=', form.data.min_cost)
            }
 
            if (form.data.max_cost) {
