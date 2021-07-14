@@ -32,6 +32,7 @@ const landingRoutes = require('./routes/landing')
 const postersRoutes = require('./routes/posters');
 const usersRoutes = require('./routes/users');
 const shoppingCartRoutes = require('./routes/shoppingCart')
+const checkoutRoutes = require('./routes/checkout')
 
 // import Cloudinary
 const cloudinaryRoutes = require('./routes/cloudinary');
@@ -76,6 +77,7 @@ async function main() {
     app.use('/users', usersRoutes)
     app.use('/cloudinary', cloudinaryRoutes);
     app.use('/shoppingCart', shoppingCartRoutes)
+    app.use('/checkout', checkoutRoutes)
 }
 
 main();

@@ -37,15 +37,10 @@ class CartServices {
 
     async setQuantity (posterId, newQuantity) {
         // check if item already exist
-        console.log(this.user_id);
-        console.log(posterId);
         let cartItem = await getCartItemByUserAndPoster(this.user_id, posterId)
-        console.log(newQuantity)
-        console.log(cartItem);
         if (cartItem) {
             cartItem.set('quantity', newQuantity);
             await cartItem.save();
-            console.log(1)
             return cartItem;
         }
         return null;
